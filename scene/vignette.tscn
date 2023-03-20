@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://dooqgrsbo2g1v"]
+
+[ext_resource type="Texture2D" uid="uid://dnoi8wxggasj4" path="res://icon.png" id="1_a7xee"]
+[ext_resource type="Shader" path="res://shader/vignette.gdshader" id="1_mgrfi"]
+[ext_resource type="PackedScene" uid="uid://b78t8wpsydcik" path="res://scene/Player.tscn" id="1_xaudr"]
+[ext_resource type="Script" path="res://script/Player.gd" id="3_53i3r"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qx11r"]
+resource_name = "GodotBlock"
+texture = ExtResource("1_a7xee")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+0:0/0/modulate = Color(1, 0.141176, 0.184314, 1)
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-32, -32, 32, -32, 32, 32, -32, 32)
+
+[sub_resource type="TileSet" id="TileSet_4d5cb"]
+tile_size = Vector2i(64, 64)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_qx11r")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1vof5"]
+shader = ExtResource("1_mgrfi")
+shader_parameter/player_position = Vector2(0.5, 0.5)
+shader_parameter/color = Color(0, 0, 0, 1)
+shader_parameter/MULTIPLIER = 0.56
+shader_parameter/SCALE = 0.5
+shader_parameter/SOFTNESS = 0.5
+
+[node name="VignetteExample" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+texture_filter = 1
+position = Vector2(512, 300)
+tile_set = SubResource("TileSet_4d5cb")
+format = 2
+layer_0/tile_data = PackedInt32Array(327672, 0, 0, 327673, 0, 0, 327674, 0, 0, 327675, 0, 0, 327676, 0, 0, 327677, 0, 0, 327678, 0, 0, 327679, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262136, 0, 0, 196600, 0, 0, 131064, 0, 0, 65528, 0, 0, -8, 0, 0, -65544, 0, 0, -131080, 0, 0, 262137, 0, 0, 196601, 0, 0, 131065, 0, 0, -65543, 0, 0, -131079, 0, 0, -7, 0, 0, 65529, 0, 0, 196615, 0, 0, 196614, 0, 0, 196613, 0, 0, 196612, 0, 0, 196611, 0, 0, 196610, 0, 0, 196609, 0, 0, 196608, 0, 0, 262143, 0, 0, 262142, 0, 0, 262141, 0, 0, 262140, 0, 0, 262139, 0, 0, 262138, 0, 0, 7, 0, 0, 6, 0, 0, 5, 0, 0, 4, 0, 0, 3, 0, 0, 2, 0, 0, 65530, 0, 0, -196615, 0, 0, -196616, 0, 0, -262152, 0, 0, -262151, 0, 0, -65529, 0, 0, 65543, 0, 0, 131079, 0, 0, -131065, 0, 0, -196601, 0, 0, -262137, 0, 0, -327673, 0, 0, -327674, 0, 0, -262138, 0, 0, -196602, 0, 0, -131066, 0, 0, -65530, 0, 0, 65542, 0, 0, 131078, 0, 0)
+
+[node name="ShaderLayer" type="CanvasLayer" parent="."]
+
+[node name="Torch" type="ColorRect" parent="ShaderLayer"]
+material = SubResource("ShaderMaterial_1vof5")
+custom_minimum_size = Vector2(1024, 600)
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0, 0, 0, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_xaudr")]
+position = Vector2(226, 277)
+script = ExtResource("3_53i3r")
+
+[editable path="Player"]
